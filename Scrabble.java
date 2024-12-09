@@ -52,7 +52,6 @@ public class Scrabble {
 			if (DICTIONARY[i].equals(word)) {
 				return true;
 			}
-			
 		}
 		return false;
 	}
@@ -76,7 +75,6 @@ public class Scrabble {
 		}
 		return score;
 	}
-	
 
 	// Creates a random hand of length (HAND_SIZE - 2) and then inserts
 	// into it, at random indexes, the letters 'a' and 'e'
@@ -89,10 +87,10 @@ public class Scrabble {
 		}
 		int randomIndexA = (int) (Math.random() * (hand.length() + 1));
 		hand = hand.substring(0, randomIndexA) + 'a' + hand.substring(randomIndexA);
-	
+
 		int randomIndexE = (int) (Math.random() * (hand.length() + 1));
 		hand = hand.substring(0, randomIndexE) + 'e' + hand.substring(randomIndexE);
-	
+
 		return hand;
 	}
 	
@@ -103,51 +101,50 @@ public class Scrabble {
 	public static void playHand(String hand) {
 		int score = 0;
 		In in = new In();
-	
+
 		while (hand.length() > 0) {
 			System.out.println("Current Hand: " + MyString.spacedString(hand));
 			System.out.println("Enter a word, or '.' to finish playing this hand:");
 			String input = in.readString();
-	
+
 			if (input.equals(".")) {
 				break;
 			}
-	
+
 			if (!isWordInDictionary(input)) {
 				System.out.println("This is not a valid word.");
 				continue;
 			}
-	
+
 			boolean validWord = MyString.subsetOf(input, hand);
 			if (!validWord) {
 				System.out.println("The word cannot be created from the current hand.");
 				continue;
 			}
-	
+
 			int wordScore = wordScore(input);
 			score += wordScore;
 			System.out.println("\"" + input + "\" earned " + wordScore + " points. Total: " + score + " points.");
 			hand = MyString.remove(hand, input);
 		}
-	
+
 		if (hand.length() == 0) {
 			System.out.println("Ran out of letters. Total score: " + score + " points");
 		} else {
 			System.out.println("End of hand. Total score: " + score + " points");
 		}
 	}
-	
 
 	// Plays a Scrabble game. Prompts the user to enter 'n' for playing a new hand, or 'e'
 	// to end the game. If the user enters any other input, writes an error message.
 	public static void playGame() {
-		init(); 
+		init();
 		In in = new In();
-	
+
 		while (true) {
 			System.out.println("Enter n to deal a new hand, or e to end the game:");
 			String input = in.readString();
-	
+
 			if (input.equals("n")) {
 				String hand = createHand();
 				playHand(hand);
@@ -159,7 +156,6 @@ public class Scrabble {
 			}
 		}
 	}
-	
 
 	public static void main(String[] args) {
 		//// Uncomment the test you want to run
