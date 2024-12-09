@@ -20,14 +20,16 @@ public class MyString {
      * @return the number of times c appears in str
      */
     public static int countChar(String str, char ch) {
-        int count = 0;
-        for (int i = 0; i < str.length(); i++) {
-            if (str.charAt(i) == ch) {
-                count++;
-            }
-            
+        if(str == ""){
+            return 0;
         }
-        return count;
+        int counter = 0;
+        for(int i=0; i<str.length(); i++){
+            if(str.charAt(i) == ch){
+                counter++;
+            }
+        }
+        return counter;
     }
 
     /** Returns true if str1 is a subset string str2, false otherwise
@@ -42,25 +44,34 @@ public class MyString {
      * @return true is str1 is a subset of str2, false otherwise
      */
     public static boolean subsetOf(String str1, String str2) {
-         for (int i = 0; i < str1.length(); i++) {
-            char ch = str1.charAt(i);
-            boolean found = false;
-
-            for (int j = 0; j < str2.length(); j++) {
-                if (ch == str2.charAt(j)) {
-                    found = true;
+         if(str1 == null || str2 == null){
+            return false;
+         }
+         if(str1.length()>str2.length()){
+            return false;
+         }
+         char [] arr1 = new char[str1.length()];
+         char [] arr2 = new char[str2.length()];
+         int counter=0;
+         for(int i =0; i< str2.length(); i++){
+            arr2[i] = str2.charAt(i);
+         }
+         for(int i =0; i< str1.length(); i++){
+            arr1[i] = str1.charAt(i);
+         }
+         for (int i = 0; i < arr2.length; i++) {
+            for (int j = 0; j < arr1.length; j++) {
+                if(arr2[i] == arr1[j]){
+                    counter++;
+                    arr1[j] = ' ';
                     break;
                 }
-                
-            }
-
-            if (!found) {
-                return false;
+            }       
          }
-
-         
+         if(counter == str1.length()){
+            return true;
          }
-        return true;
+        return false;
     }
 
     /** Returns a string which is the same as the given string, with a space
@@ -72,16 +83,17 @@ public class MyString {
      * @return a string consisting of the characters of str, separated by spaces.
      */
     public static String spacedString(String str) {
-        String result = "";
-        for (int i = 0; i < str.length(); i++) {
-            result+= str.charAt(i);
-
-            if (i< str.length()-1) {
-                result+= " ";
-            }
-            
+        if(str == null){
+            return " ";
         }
-        return result;
+        String spacestr = "";
+        for(int i = 0; i<str.length(); i++){
+            spacestr += str.charAt(i);
+            if(i<str.length()-1){
+                spacestr += " ";
+            }
+        }
+        return spacestr;
     }
   
     /**
@@ -95,13 +107,11 @@ public class MyString {
      * @return a randomly generated string, consisting of 'n' lowercase letters
      */
     public static String randomStringOfLetters(int n) {
-        String result = "";
-        for (int i = 0; i <n; i++) {
-            char randomchar = (char) ('a' + (int) (Math.random() * 26));
-            result+= randomchar;
-            
+        String str = "";
+        for(int i=0; i<n; i++){
+            str += (char)((int)(('a' + Math.random()*26)));
         }
-        return result;
+        return str;
     }
 
     /**
@@ -114,24 +124,26 @@ public class MyString {
      * @return a string consisting of str1 minus all the characters of str2
      */
     public static String remove(String str1, String str2) {
-        String result = "";
+        String str = "";
+        boolean add = true;
+        char[] arr = new char[str2.length()];
+        for(int i=0;i<str2.length();i++){
+            arr[i] = str2.charAt(i);
+        }
         for (int i = 0; i < str1.length(); i++) {
-            char ch = str1.charAt(i);
-            boolean found = false;
-
-            for (int j = 0; j < str2.length(); j++) {
-                if (ch == str2.charAt(j)) {
-                    found = true;
+            for(int j = 0; j<arr.length; j++){
+                if(str1.charAt(i) == arr[j]){
+                    arr[j] = ' ';
+                    add = false;
                     break;
                 }
-                
             }
-            if (!found) {
-                result += ch;
+            if(add){
+                str+=str1.charAt(i);
             }
+            add = true;
         }
-
-        return result;
+        return str;
     }
 
     /**
